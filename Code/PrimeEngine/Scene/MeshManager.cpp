@@ -83,6 +83,24 @@ void MeshManager::getBox(const char* asset, const char* package, int& threadOwne
 	//The points needed for a box are...
 	   //Top: (xMin, zMin, yMax), (xMin, zMax, yMax), (xMax, zMin, yMax), (xMax, zMax, yMax)
 	   //Bottom: (xMin, zMin, yMax), 
+	/*
+	Vector3 posArray[12] = {
+		topForwardLeft, topForwardLeft, topForwardRight, topBackLeft,
+		topForwardLeft, topForwardRight, topBackLeft, topBackRight,
+		bottomForwardLeft, bottomForwardLeft, bottomForwardRight, bottomBackLeft
+	};
+
+	Vector3 targetArray[12] = {
+		topForwardRight, topBackLeft, topBackRight, topBackRight,
+		bottomForwardLeft, bottomForwardRight, bottomBackLeft, bottomBackRight,
+		bottomForwardRight, bottomBackLeft, bottomBackRight, bottomBackRight
+	};
+
+	Vector3 colorArray[12] = {
+		color, color, color, color,
+		color, color, color, color,
+		color, color, color, color
+	};*/
 
 	Vector3 pointArray[48] = {
 		topForwardLeft, color, topForwardRight, color, topForwardLeft, color, topBackLeft, color, topForwardRight, color, topBackRight, color, topBackLeft, color, topBackRight, color,

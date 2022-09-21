@@ -163,21 +163,39 @@ void DebugRenderer::createLineMesh(bool hasTransform, const Matrix4x4 &transform
 			Vector3 v = pos + transform.getV() * scale;
 			Vector3 n = pos + transform.getN() * scale;
 
+			// Adds two lines of direction in the x direction. One from the untransformed shape, one from the transformed shape
 			list.add(pos.m_x, pos.m_y, pos.m_z); list.add(1.f, 0, 0); list.add(u.m_x, u.m_y, u.m_z); list.add(1.f, 0, 0); 
+			// Adds two lines of direction in the y direction. One from the untransformed shape, one from the transformed shape
 			list.add(pos.m_x, pos.m_y, pos.m_z); list.add(0, 1.f, 0);  list.add(v.m_x, v.m_y, v.m_z); list.add(0, 1.f, 0);
+			// Adds two lines of direction in the y direction. One from the untransformed shape, one from the transformed shape
 			list.add(pos.m_x, pos.m_y, pos.m_z); list.add(0, 0, 1.f); list.add(n.m_x, n.m_y, n.m_z); list.add(0, 0, 1.f);
+
+			//This doesn't actually transform the other lines. What a gyp!
 		}
 
 		if (pRawData)
 		{
 			for (int i = 0; i < numInRawData; i++)
 			{
+				Vector3 firstPoint = { pRawData[i * 6], pRawData[i * 6 + 1], pRawData[i * 6 + 2] };
+				Vector3 secondPoint = { pRawData[i * 6 + 3], pRawData[i * 6 + 4], pRawData[i * 6 + 5] };
+
+				firstPoint = transform * firstPoint;
+				secondPoint = transform * secondPoint;
+
+				list.add(firstPoint.getX());
+				list.add(firstPoint.getY());
+				list.add(firstPoint.getZ());
+				list.add(secondPoint.getX());
+				list.add(secondPoint.getY());
+				list.add(secondPoint.getZ());
+				/*
 				list.add(pRawData[i * 6]);
 				list.add(pRawData[i * 6 + 1]);
 				list.add(pRawData[i * 6 + 2]);
 				list.add(pRawData[i * 6 + 3]);
 				list.add(pRawData[i * 6 + 4]);
-				list.add(pRawData[i * 6 + 5]);
+				list.add(pRawData[i * 6 + 5]);*/
 			}
 		}
 	}

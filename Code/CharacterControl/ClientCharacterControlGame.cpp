@@ -229,6 +229,9 @@ int ClientCharacterControlGame::initGame()
 				//Vector3 linepts[] = { pos, color, target, color };
 
 				//DebugRenderer::Instance()->createLineMesh(true, pMainSN->m_base, &linepts[0].m_x, 24, 9999999, 1.0f);
+
+
+				// The colored lines only appear when the matrix is in place. Maybe I need to have four vector arrays like taat
 				DebugRenderer::Instance()->createLineMesh(true, pMainSN->m_base, floatarr, 24, 9999999, 1.0f);
  
 
