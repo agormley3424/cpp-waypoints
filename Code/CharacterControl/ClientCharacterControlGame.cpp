@@ -191,7 +191,7 @@ int ClientCharacterControlGame::initGame()
     
     m_pContext->getGPUScreen()->AcquireRenderContextOwnership(m_pContext->m_gameThreadThreadOwnershipMask);
 	
-    bool spawnALotOfMeshes = false;
+    bool spawnALotOfMeshes = true;
     
     int maxX = 10; // maybe need more to get framerate lower
     
@@ -213,9 +213,19 @@ int ClientCharacterControlGame::initGame()
                 pImrodMeshInst->addDefaultComponents();
 				pImrodMeshInst->initFromFile("imrod.x_imrodmesh_mesh.mesha", "Default", m_pContext->    m_gameThreadThreadOwnershipMask);
 
+
                 pMainSN->addComponent(hImrodMeshInst);
+
+
+
+				Vector3 target = pMainSN->m_base.getPos();
+				Vector3 pos = pMainSN->m_base.getPos();
+				Vector3 color(1.0f, 1.0f, 0);
+				Vector3 linepts[] = { pos, color, target, color };
         
                 RootSceneNode::Instance()->addComponent(hSN);
+
+				DebugRenderer::Instance()->createLineMesh(true, pMainSN->m_base, & linepts[0].m_x, 24, 9999999, 1.0f);
             }
         }
     }

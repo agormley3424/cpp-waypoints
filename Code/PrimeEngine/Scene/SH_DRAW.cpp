@@ -14,6 +14,7 @@
 #include "PrimeEngine/APIAbstraction/GPUBuffers/VertexBufferGPUManager.h"
 #include "PrimeEngine/Lua/LuaEnvironment.h"
 #include "Light.h"
+#include "PrimeEngine/Scene/DebugRenderer.h"
 #include "PrimeEngine/Render/ShaderActions/SetPerObjectConstantsShaderAction.h"
 // Sibling/Children includes
 #include "Mesh.h"
@@ -276,6 +277,16 @@ void SingleHandler_DRAW::do_GATHER_DRAWCALLS(Events::Event *pEvt)
 	{
 		gatherDrawCallsForRange(pMeshCaller, pDrawList, &hVertexBuffersGPU[0], numVBufs, vbufWeights, iRange, pDrawEvent, pZOnlyDrawEvent);
 	}
+
+	Vector3 target = hParentSN.getObject<SceneNode>()->m_base.getPos();
+	Vector3 pos = hParentSN.getObject<SceneNode>()->m_base.getPos() + Vector3(2, 0, 0);
+	Vector3 color(1.0f, 1.0f, 0);
+	Vector3 linepts[] = { pos, color, target, color };
+
+	//RootSceneNode::Instance()->addComponent(hSN);
+
+	//DebugRenderer::Instance()->createLineMesh(true, hParentSN.getObject<SceneNode>()->m_base, & linepts[0].m_x, 2, 200, 1.0f);
+
 }
 
 void SingleHandler_DRAW::gatherDrawCallsForRange(Mesh *pMeshCaller, DrawList *pDrawList,  PE::Handle *pHVBs, int vbCount, Vector4 &vbWeights, 

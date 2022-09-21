@@ -124,6 +124,16 @@ void DebugRenderer::createRootLineMesh()
 	DebugRenderer::Instance()->createLineMesh(true, m, &linepts[0].m_x, numPts, 0);// send event while the array is on the stack
 }
 
+
+// I think what's happening here is that it takes a pointer to the first float, assuming it's the first in a float of arrays?
+
+//Creates a line mesh with a limited lifespan
+// Has transform determines whether its points will be transformed from local to world space
+// transform is the world matrix
+// pRawData is a pointer leading to an array of floats
+// numInRawData is the number of points you're going to have (lines * 2)
+// timeToLive determines how long the line mesh is rendered for
+// scale increases or decreases the scale of the lines
 void DebugRenderer::createLineMesh(bool hasTransform, const Matrix4x4 &transform, float *pRawData, int numInRawData, float timeToLive, float scale /* = 1.0f*/)
 {
 	if (EnableDebugRendering && m_numAvailableLineLists)
@@ -172,6 +182,80 @@ void DebugRenderer::createLineMesh(bool hasTransform, const Matrix4x4 &transform
 		}
 	}
 	
+}
+/*
+void vecToFloat(Vector3* vecarray, int vecsise, float* floatarr) {
+
+	for (int i = 0, j = 0; i < vecsise; i+=3, ++j) {
+		floatarr[j] = vecarray[i].getX();
+		floatarr[j+ 1] = vecarray[i].getY();
+		floatarr[j+2] = vecarray[i].getZ();
+	}
+}*/
+/*
+// I think what's happening here is that it takes a pointer to the first float, assuming it's the first in a float of arrays?
+void DebugRenderer::createLineMesh2(bool hasTransform, const Matrix4x4& transform, Vector3* pRawData, int numInRawData, float timeToLive, float scale)
+{
+	float* floatarr= new float[numInRawData * 3];
+
+	vecToFloat(pRawData, numInRawData, floatarr);
+	numInRawData *= 3;
+
+	createLineMesh(hasTransform, transform, floatarr, numInRawData * 3, timeToLive, scale);
+	
+	}
+
+}*/
+
+void DebugRenderer::createLineMeshForDummies(bool hasTransform, const Matrix4x4& transform, Vector3* pRawData, int numInRawData, float timeToLive, float scale /* = 1.0f*/)
+{
+	//numInRawData should always be 24 points...
+	if (EnableDebugRendering && m_numAvailableLineLists)
+	{/**/
+		int index = m_availableLineLists[--m_numAvailableLineLists];
+		Array<float>& list = m_lineLists[index];
+
+
+		m_lineListLifetimes[index] = timeToLive;
+		int numPoints = 0;
+		//if (hasTransform)
+		//{
+		//	numPoints += 3 /*lines*/ * 2 /*points per line*/;
+		//}
+
+		if (pRawData)
+		{
+			numPoints += numInRawData;
+		}
+
+		list.reset(numPoints * 6 /*pos+color*/);
+
+		//if (hasTransform)
+		//{
+		//	Vector3 pos = transform.getPos();
+		//	Vector3 u = pos + transform.getU() * scale;
+		//	Vector3 v = pos + transform.getV() * scale;
+		//	Vector3 n = pos + transform.getN() * scale;
+
+		//	list.add(pos.m_x, pos.m_y, pos.m_z); list.add(1.f, 0, 0); list.add(u.m_x, u.m_y, u.m_z); list.add(1.f, 0, 0);
+		//	list.add(pos.m_x, pos.m_y, pos.m_z); list.add(0, 1.f, 0);  list.add(v.m_x, v.m_y, v.m_z); list.add(0, 1.f, 0);
+		//	list.add(pos.m_x, pos.m_y, pos.m_z); list.add(0, 0, 1.f); list.add(n.m_x, n.m_y, n.m_z); list.add(0, 0, 1.f);
+		//}
+
+		if (pRawData)
+		{
+			for (int i = 0; i < 24; i+=2)
+			{
+				list.add(pRawData[i].getX());
+				list.add(pRawData[i].getY());
+				list.add(pRawData[i].getZ());
+				list.add(pRawData[i + 1].getX());
+				list.add(pRawData[i + 1].getY());
+				list.add(pRawData[i + 1].getZ());
+			}
+		}
+	}
+
 }
 
 void DebugRenderer::createTextMesh(const char *str, bool isOverlay2D, bool is3D, bool is3DFacedToCamera, bool is3DFacedToCameraLockedYAxis, float timeToLive, Vector3 pos, float scale, int &threadOwnershipMask)

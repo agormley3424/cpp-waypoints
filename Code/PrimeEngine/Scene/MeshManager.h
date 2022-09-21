@@ -33,6 +33,7 @@ struct MeshManager : Component
 	MeshManager(PE::GameContext &context, PE::MemoryArena arena, Handle hMyself);
 
 	PE::Handle getAsset(const char *asset, const char *package, int &threadOwnershipMask);
+	PE::Handle* getBox(const char* asset, const char* package, int& threadOwnershipMask);
 
 	// for when asset is manually added from outside. it will get autogeenrated key
 	void registerAsset(const Handle &h);

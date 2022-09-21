@@ -1,0 +1,17 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(400,5): warning MSB8029: The Intermediate directory or Output directory cannot reside under the Temporary directory as it could lead to issues with incremental build.
+  SH_DRAW.cpp
+c:\users\aaron\desktop\schoolwork\csci_522\hw3\peworkspace\code\primeengine\scene\sh_draw.cpp(205): warning C4018: '<': signed/unsigned mismatch
+c:\users\aaron\desktop\schoolwork\csci_522\hw3\peworkspace\code\primeengine\scene\sh_draw.cpp(462): warning C4018: '<': signed/unsigned mismatch
+ShaderAction.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+SetInstanceControlConstantsShaderAction.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+SA_SetAndBind_ConstResource_SingleObjectAnimationPalette.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+SA_SetAndBind_ConstResource_PerInstanceData.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+SA_SetAndBind_ConstResource_InstancedObjectsAnimationPalettes.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+SA_CopyInto_SysMem_FromInstancedObjectsAnimationCSReduceResult.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+Profiling.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ParticleSystemCPU.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ParticleBufferCPU.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+VertexBufferGPUInputGeoDescs.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+Effect_GL.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+Effect_D3D11.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+  PrimeEngine-win32d3d9.vcxproj -> C:\Users\aaron\Desktop\Schoolwork\CSCI_522\HW3\PEWorkspace\Code\..\build\PrimeEngine-win32d3d9.lib

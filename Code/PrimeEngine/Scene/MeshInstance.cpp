@@ -45,6 +45,7 @@ void MeshInstance::initFromFile(const char *assetName, const char *assetPackage,
 		int &threadOwnershipMask)
 {
 	Handle h = m_pContext->getMeshManager()->getAsset(assetName, assetPackage, threadOwnershipMask);
+	Handle* hB = m_pContext->getMeshManager()->getBox(assetName, assetPackage, threadOwnershipMask);
 
 	initFromRegisteredAsset(h);
 }

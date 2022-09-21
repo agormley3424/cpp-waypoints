@@ -53,6 +53,9 @@ struct DebugRenderer : public SceneNode
 		int &threadOwnershipMask);
 	void createRootLineMesh();
 	void createLineMesh(bool hasTransform, const Matrix4x4 &transform, float *pRawData, int numInRawData, float timeToLive, float scale = 1.0f);
+	//void createLineMesh2(bool hasTransform, const Matrix4x4& transform, Vector3* pRawData, int numInRawData, float timeToLive, float scale);
+	//void vecToFloat(Vector3* vecarray, int vecsise, float* floatarr);
+	void createLineMeshForDummies(bool hasTransform, const Matrix4x4& transform, Vector3* pRawData, int numInRawData, float timeToLive, float scale = 1.0f);
 
 	PE_DECLARE_IMPLEMENT_EVENT_HANDLER_WRAPPER(do_PRE_GATHER_DRAWCALLS);
 	virtual void do_PRE_GATHER_DRAWCALLS(Events::Event *pEvt);
