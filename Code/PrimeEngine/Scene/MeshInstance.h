@@ -27,6 +27,12 @@ struct MeshInstance : public Component
 	void initFromFile(const char *assetName, const char *assetPackage,
 		int &threadOwnershipMask);
 
+	void getBox(const char* assetName, const char* assetPackage,
+		int& threadOwnershipMask, float* floatarr);
+
+	/*void initFromFile(const char* assetName, const char* assetPackage,
+		int& threadOwnershipMask, float* floatarr);*/
+
 	void initFromRegisteredAsset(const PE::Handle &h);
 
 	virtual ~MeshInstance(){}

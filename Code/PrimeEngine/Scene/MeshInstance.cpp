@@ -41,14 +41,27 @@ void MeshInstance::addDefaultComponents()
 	Component::addDefaultComponents();
 }
 
+void MeshInstance::getBox(const char* assetName, const char* assetPackage,
+	int& threadOwnershipMask, float* floatarr)
+{
+	m_pContext->getMeshManager()->getBox(assetName, assetPackage, threadOwnershipMask, floatarr);
+}
+
 void MeshInstance::initFromFile(const char *assetName, const char *assetPackage,
 		int &threadOwnershipMask)
 {
 	Handle h = m_pContext->getMeshManager()->getAsset(assetName, assetPackage, threadOwnershipMask);
-	Handle* hB = m_pContext->getMeshManager()->getBox(assetName, assetPackage, threadOwnershipMask);
-
 	initFromRegisteredAsset(h);
 }
+/*
+void MeshInstance::initFromFile(const char* assetName, const char* assetPackage,
+	int& threadOwnershipMask, float* floatarr)
+{
+	Handle h = m_pContext->getMeshManager()->getAsset(assetName, assetPackage, threadOwnershipMask, floatarr);
+	//m_pContext->getMeshManager()->getBox(assetName, assetPackage, threadOwnershipMask, floatarr);
+
+	initFromRegisteredAsset(h);
+}*/
 
 bool MeshInstance::hasSkinWeights()
 {

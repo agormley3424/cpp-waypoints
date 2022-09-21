@@ -211,21 +211,28 @@ int ClientCharacterControlGame::initGame()
                 MeshInstance *pImrodMeshInst = new(hImrodMeshInst) MeshInstance(*m_pContext, m_arena, hImrodMeshInst);
         
                 pImrodMeshInst->addDefaultComponents();
-				pImrodMeshInst->initFromFile("imrod.x_imrodmesh_mesh.mesha", "Default", m_pContext->    m_gameThreadThreadOwnershipMask);
+				float floatarr[48 * 3];
+
+				//pImrodMeshInst->initFromFile("imrod.x_imrodmesh_mesh.mesha", "Default", m_pContext->m_gameThreadThreadOwnershipMask, floatarr);
+				pImrodMeshInst->initFromFile("imrod.x_imrodmesh_mesh.mesha", "Default", m_pContext->m_gameThreadThreadOwnershipMask);
+
+				pImrodMeshInst->getBox("imrod.x_imrodmesh_mesh.mesha", "Default", m_pContext->m_gameThreadThreadOwnershipMask, floatarr);
+
+				pMainSN->addComponent(hImrodMeshInst);
+				RootSceneNode::Instance()->addComponent(hSN);
 
 
-                pMainSN->addComponent(hImrodMeshInst);
+				//Vector3 target = pMainSN->m_base.getPos();
+				//Vector3 pos = pMainSN->m_base.getPos();
+	
+				//Vector3 color(1.0f, 1.0f, 0);
+				//Vector3 linepts[] = { pos, color, target, color };
+
+				//DebugRenderer::Instance()->createLineMesh(true, pMainSN->m_base, &linepts[0].m_x, 24, 9999999, 1.0f);
+				DebugRenderer::Instance()->createLineMesh(true, pMainSN->m_base, floatarr, 24, 9999999, 1.0f);
+ 
 
 
-
-				Vector3 target = pMainSN->m_base.getPos();
-				Vector3 pos = pMainSN->m_base.getPos();
-				Vector3 color(1.0f, 1.0f, 0);
-				Vector3 linepts[] = { pos, color, target, color };
-        
-                RootSceneNode::Instance()->addComponent(hSN);
-
-				DebugRenderer::Instance()->createLineMesh(true, pMainSN->m_base, & linepts[0].m_x, 24, 9999999, 1.0f);
             }
         }
     }
