@@ -64,6 +64,7 @@ struct Event_GATHER_DRAWCALLS : public Event {
 	Matrix4x4 m_projectionTransform;
 	Matrix4x4 m_parentWorldTransform;
 	Matrix4x4 m_viewInvTransform;
+	Matrix4x4 m_worldTransform;
 
 	Vector3 m_eyePos;
 	Vector3 m_eyeDir;

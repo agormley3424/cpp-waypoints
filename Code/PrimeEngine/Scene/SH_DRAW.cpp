@@ -32,6 +32,7 @@
 #include "PrimeEngine/Render/ShaderActions/SA_SetAndBind_ConstResource_SingleObjectAnimationPalette.h"
 #include "PrimeEngine/Render/ShaderActions/SA_SetAndBind_ConstResource_InstancedObjectsAnimationPalettes.h"
 #include "PrimeEngine/Scene/Skeleton.h"
+#include "PrimeEngine/Math/Matrix4x4.h"
 
 
 
@@ -43,6 +44,8 @@ extern int g_iDebugBoneSegment;
 
 namespace PE {
 namespace Components {
+
+	Matrix4x4* SingleHandler_DRAW::camPos = new Matrix4x4();
 
 PrimitiveTypes::UInt32 MeshHelpers::getNumberOfRangeCalls(IndexBufferGPU *pibGPU)
 {
@@ -193,26 +196,120 @@ void SingleHandler_DRAW::do_GATHER_DRAWCALLS(Events::Event *pEvt)
 		pZOnlyDrawEvent = (Events::Event_GATHER_DRAWCALLS_Z_ONLY *)(pEvt);
     
     pMeshCaller->m_numVisibleInstances = pMeshCaller->m_instances.m_size; // assume all instances are visible
+
+	// Replace eyepos with the .getPos() from the worldTransform if this doesn't work
+
     
     // check for bounding volumes here and mark each instance as visible or not visible and set m_numVisibleInstances to number of visible instances
     
     // debug testing of instance culling. do collision check instead.
     // remove false && to enable
-    if (false && pMeshCaller->m_performBoundingVolumeCulling)
+    if (true && pMeshCaller->m_performBoundingVolumeCulling)
     {
         pMeshCaller->m_numVisibleInstances = 0;
         
         for (int iInst = 0; iInst < pMeshCaller->m_instances.m_size; ++iInst)
         {
             MeshInstance *pInst = pMeshCaller->m_instances[iInst].getObject<MeshInstance>();
-            if (iInst % 2)
+
+			//Mesh* mInst = pInst->m_hAsset.getObject<Mesh>();
+
+
+            if (pInst->hasExtremes)
             {
-                pInst->m_culledOut = false;
-                ++pMeshCaller->m_numVisibleInstances;
+				Matrix4x4 camWorld = *(SingleHandler_DRAW::camPos);
+
+				Vector3 camPos = camWorld.getPos();
+				Vector3 camRight = camWorld.getU();
+				Vector3 camUp = camWorld.getV();
+				Vector3 camForward = camWorld.getN();
+				float camY = camPos.getY();
+				float camX = camPos.getX();
+				float nearDistance = 0.05f;
+				float farDistance = 2000.0f;
+				float fovRadians = 1.03672564f;
+				float viewRatio = 1.8430677652359009f;
+
+				Vector3 nearCenter = camPos - camForward * nearDistance;
+				Vector3 farCenter = camPos - camForward * farDistance;
+
+				float nearHeight = 2 * tan(fovRadians / 2) * nearDistance;
+				float farHeight = 2 * tan(fovRadians / 2) * farDistance;
+				float nearWidth = nearHeight * viewRatio;
+				float farWidth = farHeight * viewRatio;
+
+				Vector3 farTopLeft = farCenter + camUp * (farHeight * 0.5) - camRight * (farWidth * 0.5);
+				Vector3 farTopRight = farCenter + camUp * (farHeight * 0.5) + camRight * (farWidth * 0.5);
+				Vector3 farBottomLeft = farCenter - camUp * (farHeight * 0.5) - camRight * (farWidth * 0.5);
+				Vector3 farBottomRight = farCenter - camUp * (farHeight * 0.5) + camRight * (farWidth * 0.5);
+
+				Vector3 nearTopLeft = nearCenter + Vector3(0, camY, 0) * (nearHeight * 0.5) - Vector3(camX, 0, 0) * (nearWidth * 0.5);
+				Vector3 nearTopRight = nearCenter + Vector3(0, camY, 0) * (nearHeight * 0.5) + Vector3(camX, 0, 0) * (nearWidth * 0.5);
+				Vector3 nearBottomLeft = nearCenter - Vector3(0, camY, 0) * (nearHeight * 0.5) - Vector3(camX, 0, 0) * (nearWidth * 0.5);
+				Vector3 nearBottomRight = nearCenter - Vector3(0, camY, 0) * (nearHeight * 0.5) + Vector3(camX, 0, 0) * (nearWidth * 0.5);
+
+
+
+				Vector3 p0 = nearBottomLeft; Vector3 p1 = farBottomLeft; Vector3 p2 = farTopLeft;
+				Vector3 leftPlaneNormal = ((p1 - p0).crossProduct(p2 - p1));
+				leftPlaneNormal.normalize();
+				leftPlaneNormal.dotProduct(p0);
+
+				p0 = nearTopLeft; p1 = farTopLeft; p2 = farTopRight;
+
+				Vector3 topPlaneNormal = ((p1 - p0).crossProduct(p2 - p1));
+				topPlaneNormal.normalize();
+				topPlaneNormal.dotProduct(p0);
+
+
+				p0 = nearTopRight; p1 = farTopRight; p2 = farBottomRight;
+				Vector3 rightPlaneNormal = ((p1 - p0).crossProduct(p2 - p1));
+				rightPlaneNormal.normalize();
+				rightPlaneNormal.dotProduct(p0);
+
+
+				p0 = nearBottomRight; p1 = farBottomRight; p2 = farBottomLeft;
+
+				Vector3 bottomPlaneNormal = ((p1 - p0).crossProduct(p2 - p1));
+				bottomPlaneNormal.normalize();
+				bottomPlaneNormal.dotProduct(p0);
+
+				Vector3* extremes = pInst->extremes;
+				pInst->m_culledOut = true;
+				for (int i = 0; i < 8; ++i) {
+					if (extremes[i].dotProduct(bottomPlaneNormal) - bottomPlaneNormal.dotProduct(nearBottomLeft) > 0) {
+						break;
+					}
+					if (extremes[i].dotProduct(topPlaneNormal) - topPlaneNormal.dotProduct(nearTopLeft) > 0) {
+						break;
+					}
+					if (extremes[i].dotProduct(leftPlaneNormal) - leftPlaneNormal.dotProduct(nearTopLeft) > 0) {
+						break;
+					}
+					if (extremes[i].dotProduct(rightPlaneNormal) - rightPlaneNormal.dotProduct(nearTopRight) > 0) {
+						break;
+					}
+
+
+					if (i == 7) {
+						pInst->m_culledOut = false;
+						++pMeshCaller->m_numVisibleInstances;
+					}
+					/*
+					if (extremes[i].dotProduct(bottomPlaneNormal) < 0 && extremes[i].dotProduct(topPlaneNormal) < 0 && extremes[i].dotProduct(rightPlaneNormal) < 0 && extremes[i].dotProduct(leftPlaneNormal) < 0 ) {
+						pInst->m_culledOut = false;
+						++pMeshCaller->m_numVisibleInstances;
+						break;
+					}*/
+
+				}
+
+
             }
             else
             {
-                pInst->m_culledOut = true;
+                pInst->m_culledOut = false; // don't cull a MeshInstance
+				++pMeshCaller->m_numVisibleInstances;
             }
         }
     }

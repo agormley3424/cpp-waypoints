@@ -42,9 +42,9 @@ void MeshInstance::addDefaultComponents()
 }
 
 void MeshInstance::getBox(const char* assetName, const char* assetPackage,
-	int& threadOwnershipMask, float* floatarr)
+	int& threadOwnershipMask, float* floatarr, Vector3* extremes, bool* hasExtremes)
 {
-	m_pContext->getMeshManager()->getBox(assetName, assetPackage, threadOwnershipMask, floatarr);
+	m_pContext->getMeshManager()->getBox(assetName, assetPackage, threadOwnershipMask, floatarr, extremes, hasExtremes);
 }
 
 void MeshInstance::initFromFile(const char *assetName, const char *assetPackage,

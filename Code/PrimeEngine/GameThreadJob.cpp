@@ -197,6 +197,10 @@ int ClientGame::runGameFrame()
 				drawEvt->m_eyeDir = pcam->m_worldTransform.getN();
                 drawEvt->m_parentWorldTransform.loadIdentity();
                 drawEvt->m_viewInvTransform = pcam->m_worldToViewTransform.inverse();
+
+				Matrix4x4 worldy = pcam->m_worldTransform;
+
+				drawEvt->m_worldTransform = worldy;
                 
 				//Commented out by Mac because I'm pretty sure this does nothing but am afraid to delete it...
 				static bool setCameraAsLightSource = false;

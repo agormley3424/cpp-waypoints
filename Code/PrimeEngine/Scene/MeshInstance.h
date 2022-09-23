@@ -28,7 +28,7 @@ struct MeshInstance : public Component
 		int &threadOwnershipMask);
 
 	void getBox(const char* assetName, const char* assetPackage,
-		int& threadOwnershipMask, float* floatarr);
+		int& threadOwnershipMask, float* floatarr, Vector3* extremes, bool* hasExtremes);
 
 	/*void initFromFile(const char* assetName, const char* assetPackage,
 		int& threadOwnershipMask, float* floatarr);*/
@@ -43,6 +43,8 @@ struct MeshInstance : public Component
 
     bool m_culledOut;
 	Handle m_hAsset;
+	bool hasExtremes;
+	Vector3* extremes = new Vector3[8];
 
 	int m_skinDebugVertexId;
 };

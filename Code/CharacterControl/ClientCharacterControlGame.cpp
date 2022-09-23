@@ -216,7 +216,16 @@ int ClientCharacterControlGame::initGame()
 				//pImrodMeshInst->initFromFile("imrod.x_imrodmesh_mesh.mesha", "Default", m_pContext->m_gameThreadThreadOwnershipMask, floatarr);
 				pImrodMeshInst->initFromFile("imrod.x_imrodmesh_mesh.mesha", "Default", m_pContext->m_gameThreadThreadOwnershipMask);
 
-				pImrodMeshInst->getBox("imrod.x_imrodmesh_mesh.mesha", "Default", m_pContext->m_gameThreadThreadOwnershipMask, floatarr);
+				Vector3* extremes = pImrodMeshInst->extremes;
+				bool* hasExtremes = (&pImrodMeshInst->hasExtremes);
+
+				//pImrodMeshInst->m_hAsset.getObject<Mesh>()->hasExtremes = true;
+
+				pImrodMeshInst->getBox("imrod.x_imrodmesh_mesh.mesha", "Default", m_pContext->m_gameThreadThreadOwnershipMask, floatarr, extremes, hasExtremes);
+
+				for (int i = 0; i < 8; ++i) {
+					extremes[i] = (pMainSN->m_base) * extremes[i];
+				}
 
 				pMainSN->addComponent(hImrodMeshInst);
 				RootSceneNode::Instance()->addComponent(hSN);

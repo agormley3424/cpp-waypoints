@@ -33,7 +33,7 @@ struct MeshManager : Component
 	MeshManager(PE::GameContext &context, PE::MemoryArena arena, Handle hMyself);
 
 	PE::Handle getAsset(const char *asset, const char *package, int &threadOwnershipMask);
-	void MeshManager::getBox(const char* asset, const char* package, int& threadOwnershipMask, float* floatarr);
+	void MeshManager::getBox(const char* asset, const char* package, int& threadOwnershipMask, float* floatarr, Vector3* maxVerts, bool* hasExtremes);
 	//PE::Handle getAsset(const char* asset, const char* package, int& threadOwnershipMask, float* floatarr);
 	//void getBox(const char* asset, const char* package, int& threadOwnershipMask, float* floatarr);
 

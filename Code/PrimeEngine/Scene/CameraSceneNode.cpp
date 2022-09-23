@@ -1,6 +1,8 @@
 #include "CameraSceneNode.h"
 #include "../Lua/LuaEnvironment.h"
 #include "PrimeEngine/Events/StandardEvents.h"
+#include "SH_DRAW.h"
+#include "PrimeEngine/Math/Matrix4x4.h"
 
 #define Z_ONLY_CAM_BIAS 0.0f
 namespace PE {
@@ -61,6 +63,9 @@ void CameraSceneNode::do_CALCULATE_TRANSFORMATIONS(Events::Event *pEvt)
 	m_viewToProjectedTransform = CameraOps::CreateProjectionMatrix(verticalFov, 
 		aspect,
 		m_near, m_far);
+
+	*(SingleHandler_DRAW::camPos) = m_worldTransform;
+	//*(SingleHandler_DRAW::camPos) = m_worldTransform2;
 	
 	SceneNode::do_CALCULATE_TRANSFORMATIONS(pEvt);
 

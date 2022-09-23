@@ -96,6 +96,8 @@ struct Mesh : public Component
     int m_numVisibleInstances;
 	
 	Handle m_hAnimationSetGPU; // reference to animation stored in gpu buffer
+	bool hasExtremes = false;
+	Vector3* extremes = new Vector3[8];
 	
 	bool m_bDrawControl;
     

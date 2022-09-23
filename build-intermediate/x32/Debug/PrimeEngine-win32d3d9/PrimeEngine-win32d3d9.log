@@ -1,5 +1,16 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(400,5): warning MSB8029: The Intermediate directory or Output directory cannot reside under the Temporary directory as it could lead to issues with incremental build.
-  DebugRenderer.cpp
+  SH_DRAW.cpp
+c:\users\aaron\desktop\schoolwork\csci_522\hw3\peworkspace\code\primeengine\scene\sh_draw.cpp(48): warning C4316: 'Matrix4x4': object allocated on the heap may not be aligned 16
+c:\users\aaron\desktop\schoolwork\csci_522\hw3\peworkspace\code\primeengine\scene\sh_draw.cpp(211): warning C4018: '<': signed/unsigned mismatch
+c:\users\aaron\desktop\schoolwork\csci_522\hw3\peworkspace\code\primeengine\scene\sh_draw.cpp(241): warning C4244: 'argument': conversion from 'double' to 'PrimitiveTypes::Float32', possible loss of data
+c:\users\aaron\desktop\schoolwork\csci_522\hw3\peworkspace\code\primeengine\scene\sh_draw.cpp(242): warning C4244: 'argument': conversion from 'double' to 'PrimitiveTypes::Float32', possible loss of data
+c:\users\aaron\desktop\schoolwork\csci_522\hw3\peworkspace\code\primeengine\scene\sh_draw.cpp(243): warning C4244: 'argument': conversion from 'double' to 'PrimitiveTypes::Float32', possible loss of data
+c:\users\aaron\desktop\schoolwork\csci_522\hw3\peworkspace\code\primeengine\scene\sh_draw.cpp(244): warning C4244: 'argument': conversion from 'double' to 'PrimitiveTypes::Float32', possible loss of data
+c:\users\aaron\desktop\schoolwork\csci_522\hw3\peworkspace\code\primeengine\scene\sh_draw.cpp(246): warning C4244: 'argument': conversion from 'double' to 'PrimitiveTypes::Float32', possible loss of data
+c:\users\aaron\desktop\schoolwork\csci_522\hw3\peworkspace\code\primeengine\scene\sh_draw.cpp(247): warning C4244: 'argument': conversion from 'double' to 'PrimitiveTypes::Float32', possible loss of data
+c:\users\aaron\desktop\schoolwork\csci_522\hw3\peworkspace\code\primeengine\scene\sh_draw.cpp(248): warning C4244: 'argument': conversion from 'double' to 'PrimitiveTypes::Float32', possible loss of data
+c:\users\aaron\desktop\schoolwork\csci_522\hw3\peworkspace\code\primeengine\scene\sh_draw.cpp(249): warning C4244: 'argument': conversion from 'double' to 'PrimitiveTypes::Float32', possible loss of data
+c:\users\aaron\desktop\schoolwork\csci_522\hw3\peworkspace\code\primeengine\scene\sh_draw.cpp(559): warning C4018: '<': signed/unsigned mismatch
 ShaderAction.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 SetInstanceControlConstantsShaderAction.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 SA_SetAndBind_ConstResource_SingleObjectAnimationPalette.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library

@@ -42,7 +42,7 @@ MeshManager::MeshManager(PE::GameContext &context, PE::MemoryArena arena, Handle
 {
 }
 
-void MeshManager::getBox(const char* asset, const char* package, int& threadOwnershipMask, float* floatarr) {
+void MeshManager::getBox(const char* asset, const char* package, int& threadOwnershipMask, float* floatarr, Vector3* maxVerts, bool* hasExtremes) {
 
 	MeshCPU mcpu(*m_pContext, m_arena);
 	mcpu.ReadMesh(asset, package, "");
@@ -77,6 +77,19 @@ void MeshManager::getBox(const char* asset, const char* package, int& threadOwne
 	Vector3 bottomForwardRight = { maxVert[0], minVert[1],minVert[2] };
 	Vector3 bottomBackLeft = { minVert[0], minVert[1],maxVert[2] };
 	Vector3 bottomBackRight = { maxVert[0], minVert[1],maxVert[2] };
+
+	if (!(*hasExtremes)) {
+		maxVerts[0] = topForwardLeft;
+		maxVerts[1] = topForwardRight;
+		maxVerts[2] = topBackLeft;
+		maxVerts[3] = topBackRight;
+		maxVerts[4] = bottomForwardLeft;
+		maxVerts[5] = bottomForwardRight;
+		maxVerts[6] = bottomBackLeft;
+		maxVerts[7] = bottomBackRight;
+
+		(*hasExtremes) = true;
+	}
 
 	Vector3 color = { 255, 255, 255 };
 
@@ -144,8 +157,8 @@ PE::Handle MeshManager::getAsset(const char *asset, const char *package, int &th
 {	/////// This is here for testing debug prints
 	//this->getBox(asset, package, threadOwnershipMask);
 	OutputDebugStringW(L"OutputDebugStringW Test value\n");
-	std::cout << "cout test value\n" << std::endl;
-	std::cerr << "cerr test value\n" << std::endl;
+	//std::cout << "cout test value\n" << std::endl;
+	//std::cerr << "cerr test value\n" << std::endl;
 	OutputDebugStringA("outputdebugstring a test value \n");
 
 

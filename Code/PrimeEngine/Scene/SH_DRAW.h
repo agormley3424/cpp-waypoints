@@ -13,6 +13,7 @@
 #include "../Events/Component.h"
 #include "../Events/StandardEvents.h"
 #include "../Utils/Array/Array.h"
+#include "PrimeEngine/Math/Matrix4x4.h"
 
 struct IndexRange;
 
@@ -50,6 +51,9 @@ struct SingleHandler_DRAW : public Component
 		SingleHandler_DRAW *p = new(s_hMyself) SingleHandler_DRAW(context, arena, s_hMyself);
 		p->addDefaultComponents();
 	}
+
+	static Matrix4x4* camPos;
+
 
 private:
 	void gatherDrawCallsForRange(Mesh *pMeshCaller, DrawList *pDrawList, PE::Handle *pHVBs, int vbCount, Vector4 &vbWeights, int iRange,
